@@ -13,6 +13,8 @@ must populate `.env` with
 - `SCHEDULES_DATA_SOURCE` (parent page to write new shopping list to)
 - `SCHEDULES_BLOCK` (block in parent page under which new shopping list will be added)
 
+
+logic that runs lives in main.py - tailor to your usecase ig
 ```bash
 $ python main.py
 ```
