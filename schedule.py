@@ -14,7 +14,7 @@ recipe format:
 ]
 '''
 # from list of recipes, create a random shorlist schedule (incl total servings)
-def MakeSchedule(serv, recipes):
+def MakeRandomSchedule(serv, recipes):
     # keep adding recipes until we run out of options OR we have enough servings
     seen = set()
     doubled = False
@@ -39,12 +39,38 @@ def MakeSchedule(serv, recipes):
         if serv > double_threshold and doubled == False and curr["can_double"]:
             doubled = True
             schedule["recipes"][-1]["name"] = "(doubled) " + schedule["recipes"][-1]["name"]
-            schedule["recipes"][-1]["servings"] = schedule["recipes"][-1]["servings"] *2
+            schedule["recipes"][-1]["servings"] = schedule["recipes"][-1]["servings"] * 2
 
         schedule["servings"] += schedule["recipes"][-1]["servings"] 
         seen.add(idx)
 
     return schedule
+
+
+'''
+selection format
+{
+    "title" : doubled (bool)
+}
+
+'''
+def MakeScheduleFromList(allRecipes, selection):
+    # keep adding recipes until we run out of options OR we have enough servings
+    schedule = {
+        "servings": 0,
+        "recipes": []
+        }
+
+    for r in allRecipes:
+        if r["name"] in selection:
+            schedule["recipes"].append(r)
+
+            if selection[r["name"]]:
+                schedule["recipes"][-1]["name"] = "(doubled) " + schedule["recipes"][-1]["name"]
+                schedule["recipes"][-1]["servings"] = schedule["recipes"][-1]["servings"] * 2
+
+    return schedule
+
 
 def PrintSchedule(schedule):
     ret = ""

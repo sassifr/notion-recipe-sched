@@ -1,4 +1,4 @@
-from schedule import MakeSchedule, PrintSchedule, MakeShoppingList, PrintShoppingList
+from schedule import MakeRandomSchedule, PrintSchedule, MakeShoppingList, PrintShoppingList, MakeScheduleFromList
 from dotenv import load_dotenv
 from notion import EMOKI, WritePage, GetRecipePageIDs
 from datetime import date
@@ -11,7 +11,15 @@ if __name__ == '__main__':
 
     allRecipes = GetRecipePageIDs()
 
-    schedule = MakeSchedule(10, allRecipes)
+    # schedule = MakeRandomSchedule(10, allRecipes)
+
+    test = {
+        "dal": True,
+        "squashta": False
+        }
+
+    schedule = MakeScheduleFromList(allRecipes, test)
+
     body = PrintSchedule(schedule)
 
     shoppingList = MakeShoppingList(schedule["recipes"])
@@ -19,7 +27,9 @@ if __name__ == '__main__':
     body += PrintShoppingList(shoppingList)
     today = date.today()
 
-    WritePage(body, f'{today}')
+    print(body)
+
+    # WritePage(body, f'{today}')
 
     # for idx in range(len(EMOKI)):
     #     print(EMOKI[idx])
